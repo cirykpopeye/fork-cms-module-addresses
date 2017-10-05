@@ -76,6 +76,9 @@
       <item type="label" name="EditAddress">
         <translation language="nl"><![CDATA[Bewerk adres]]></translation>
       </item>
+      <item type="label" name="MoreInfo">
+        <translation language="nl"><![CDATA[Meer info]]></translation>
+      </item>
     </Addresses>
   </Backend>
   <Frontend>
@@ -85,6 +88,15 @@
       </item>
       <item type="label" name="SearchBox">
         <translation language="nl"><![CDATA[Zoek hier]]></translation>
+      </item>
+      <item type="label" name="ContactInformation">
+        <translation language="nl"><![CDATA[Contact informatie]]></translation>
+      </item>
+      <item type="label" name="Address">
+        <translation language="nl"><![CDATA[Adres]]></translation>
+      </item>
+      <item type="label" name="LinkToMaps">
+        <translation language="nl"><![CDATA[Link naar Google Maps]]></translation>
       </item>
     </Core>
   </Frontend>

@@ -74,7 +74,7 @@ class AddressTranslationType extends AbstractType
                         [
                             'base_field_name' => 'title',
                             'detail_url' => '',
-                            'generate_url_callback_class' => 'addresses.repository.group_translation',
+                            'generate_url_callback_class' => 'addresses.repository.address_translation',
                             'generate_url_callback_method' => 'getURL',
                             'generate_url_callback_parameters' => [
                                 $event->getData()->getLocale(),
