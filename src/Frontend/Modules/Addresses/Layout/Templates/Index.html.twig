@@ -1,0 +1,42 @@
+<p>{{ msg.FindYourShop }}</p>
+
+{% include "Addresses/Layout/Templates/Map.html.twig" %}
+
+
+<hr>
+
+{% for group in groups %}
+    {% set trans = group.getTranslation(language) %}
+    {% set addresses = group.getAddresses() %}
+
+    <h2 id="group-{{ group.id }}">{{ trans.title }}</h2>
+
+    {% for address in addresses %}
+        {% set addressLang = address.getTranslation(language) %}
+      <div class="row" style="margin-top: 8px; margin-bottom: 8px">
+        <div class="col-md-2 col-sm-6 text-md-center p-b-1">
+          <a href="{{ address.getWebUrl() }}" class="btn btn-primary">{{ 'lbl.MoreInfo'|trans|ucfirst }}</a>
+        </div>
+        <div class="col-md-4 col-sm-6">
+          <h3><a href="{{ address.getWebUrl() }}">{{ addressLang.title }}</a></h3>
+          <p>
+              {{ address.street }} {{ address.number }}<br/>
+              {{ address.postal }} <b>{{ address.city }}</b>
+          </p>
+            {% if addressLang.summary|length %}
+                {{ addressLang.getParagraph()|raw }}
+            {% endif %}
+        </div>
+        <div class="col-md-3 col-sm-6 text-xs-center">
+          <a href="{{ address.getWebUrl() }}"><img src="{{ address.logo.getWebPath('155x155') }}" style="height: 180px" alt="{{ addressLang.title }}"></a>
+        </div>
+        <div class="col-md-3 col-sm-6 text-xs-center text-sm-right">
+          <a href="{{ address.getWebUrl() }}"><img src="{{ address.image.getWebPath('340x227') }}" style="height: 180px" alt="{{ addressLang.title }}"></a>
+        </div>
+      </div>
+      <hr>
+    {% endfor %}
+
+
+{% endfor %}
+

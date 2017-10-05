@@ -1,0 +1,3 @@
+{% for address in group.getAddresses() %}
+    {% include "Modules/Addresses/Layout/Partials/Address.html.twig" with {'address': address} %}
+{% endfor %}

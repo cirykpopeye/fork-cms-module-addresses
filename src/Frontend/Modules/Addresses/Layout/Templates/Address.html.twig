@@ -1,0 +1,42 @@
+{% set addressLang = address.getTranslation(language) %}
+<div class="row">
+    <div class="col-sm-8">
+        <h2>{{ addressLang.getTitle() }}</h2>
+        <p>{{ addressLang.getDescription()|raw }}</p>
+        {#<h3>{{ 'lbl.Address'|trans }}</h3>#}
+        
+
+        <h3>{{ 'lbl.ContactInformation'|trans|ucfirst }}</h3>
+        <dl>
+            <dt>{{ 'lbl.Address'|trans|ucfirst }}</dt>
+            <dd>{{ address.street }} {{ address.number }}<br/>{{ address.city }} {{ address.postal }}</dd>
+            {% if address.email|length %}
+                <dt>{{ 'lbl.Email'|trans|ucfirst }}</dt>
+                <dd><a href="/{{ LANGUAGE }}/contact">{{ address.email }}</a></dd>
+            {% endif %}
+            {% if address.telephone|length %}
+                <dt>{{ 'lbl.Telephone'|trans|ucfirst }}</dt>
+                <dd><a href="tel:{{ address.telephone }}">{{ address.telephone }}</a></dd>
+            {% endif %}
+            {% if address.fax|length %}
+                <dt>{{ 'lbl.Fax'|trans|ucfirst }}</dt>
+                <dd>{{ address.fax }}</dd>
+            {% endif %}
+        </dl>
+
+        {% if addressLang.hasValidAction() %}
+            {{ addressLang.actionMessage|raw }}
+        {% endif %}
+    </div>
+    <!-- /.col-sm-8 -->
+
+    <div class="col-sm-4">
+        {% if address.getImage() != '' %}
+            <p><img src="{{ address.getImage().getWebPath('source') }}" alt="{{ addressLang.getTitle() }}" title="{{ addressLang.getTitle() }}"  ></p>
+        {% endif %}
+        <h3><a href="http://maps.google.com/?q={{ address.postal }} {{ address.city }}, {{ address.country }}, {{ address.street }} {{ address.number }}" target="_blank">{{ 'lbl.LinkToMaps'|trans|ucfirst }}</a></h3>
+
+        <div id="map" style="width:100%;height:250px;"></div>
+    </div>
+</div>
+<!-- /.row -->

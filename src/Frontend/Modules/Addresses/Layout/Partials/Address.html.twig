@@ -1,0 +1,32 @@
+<h3><a href="{{ address.getWebUrl() }}">{{ trans.getTitle() }}</a></h3>
+<section class="address-popup">
+    <div class="row">
+        <div class="col-sm-5 text-right">
+            <a href="{{ address.getWebUrl() }}">{{ 'lbl.Address'|trans }}</a>
+        </div>
+        <div class="col-sm-7">
+            {{ address.getStreet() }} {{ address.getNumber() }}<br/>
+            {{ address.getPostal() }} {{ address.getCity() }}
+        </div>
+    </div>
+    {% if address.getTelephone() != '' %}
+        <div class="row">
+            <div class="col-sm-5 text-right">
+                <strong>{{ 'lbl.Phone'|trans }}</strong>
+            </div>
+            <div class="col-sm-7">
+                {{ address.getTelephone() }}
+            </div>
+        </div>
+    {% endif %}
+    {% if address.getEmail() != '' %}
+        <div class="row">
+            <div class="col-sm-5 text-right">
+                <strong>{{ 'lbl.Email'|trans }}</strong>
+            </div>
+            <div class="col-sm-7">
+                {{ address.getEmail() }}
+            </div>
+        </div>
+    {% endif %}
+</section>
