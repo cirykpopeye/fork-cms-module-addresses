@@ -1,0 +1,21 @@
+services:
+    addresses.repository.group:
+      class: Backend\Modules\Addresses\Domain\Group\GroupRepository
+      factory: ["@doctrine.orm.entity_manager", getRepository]
+      arguments:
+            - Backend\Modules\Addresses\Domain\Group\Group
+    addresses.repository.group_translation:
+        class: Backend\Modules\Addresses\Domain\Group\GroupTranslationRepository
+        factory: ["@doctrine.orm.entity_manager", getRepository]
+        arguments:
+            - Backend\Modules\Addresses\Domain\Group\GroupTranslation
+    addresses.repository.address:
+          class: Backend\Modules\Addresses\Domain\Address\AddressRepository
+          factory: ["@doctrine.orm.entity_manager", getRepository]
+          arguments:
+                - Backend\Modules\Addresses\Domain\Address\Address
+    addresses.repository.address_translation:
+        class: Backend\Modules\Addresses\Domain\Address\AddressTranslationRepository
+        factory: ["@doctrine.orm.entity_manager", getRepository]
+        arguments:
+            - Backend\Modules\Addresses\Domain\Address\AddressTranslation

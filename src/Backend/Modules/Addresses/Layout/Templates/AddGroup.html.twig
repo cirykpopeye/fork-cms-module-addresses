@@ -1,0 +1,91 @@
+{% extends '/Layout/Templates/base.html.twig' %}
+
+{% block content %}
+  {{ form_start(form) }}
+  <div class="row fork-module-content">
+    <div class="col-md-12">
+      <div class="tabpanel">
+        <ul class="nav nav-tabs" role="tablist">
+
+
+          {# Content tabs #}
+          {% for locale, translationField in form.translations %}
+            {% set tabName = 'tab' ~ locale|ucfirst %}
+            <li role="presentation" {% if loop.first %}class="active"{% endif %}>
+              <a href="#{{ tabName }}"
+                 aria-controls="{{ tabName }}" role="tab" data-toggle="tab">
+                {{ locale|upper|tolabel|ucfirst }}</a>
+            </li>
+          {% endfor %}
+
+          <li role="presentation">
+            <a href="#tabGeneral" aria-controls="tabGeneral" role="tab" data-toggle="tab">{{ 'lbl.General'|trans|ucfirst }}</a>
+          </li>
+
+          {# Addresses #}
+          <li role="presentation">
+            <a href="#tabAddresses"
+               aria-controls="media" role="tab" data-toggle="tab">{{ 'lbl.Addresses'|trans|ucfirst }}</a>
+          </li>
+
+          {# SEO tabs #}
+          {% for locale,translationField in form.translations|reverse %}
+            {% set tabName = 'tabSEO' ~ locale|ucfirst %}
+            <li class="pull-right" role="presentation">
+              <a href="#{{ tabName }}" aria-controls="{{ tabName }}" role="tab" data-toggle="tab">{{ 'lbl.SEO'|trans|ucfirst }} {{ locale|upper|tolabel }}</a>
+            </li>
+          {% endfor %}
+
+
+        </ul>
+        <div class="tab-content">
+          <div role="tabpanel" class="tab-pane" id="tabGeneral">
+            <div class="row fork-module-content">
+              <div class="col-md-6">
+                {{ form_row(form.image) }}
+              </div>
+            </div>
+          </div>
+
+          <div role="tabpanel" class="tab-pane" id="tabAddresses">
+            <div class="row fork-module-content">
+              <div class="col-md-12">
+                  {{ form_row(form.addresses) }}
+              </div>
+            </div>
+          </div>
+
+          {# SEO tab contents #}
+          {% for locale,translationField in form.translations %}
+            {% set tabName = 'tab' ~ locale|ucfirst %}
+            {% set SEOTabName = 'tabSEO' ~ locale|ucfirst %}
+            <div role="tabpanel" class="tab-pane" id="{{ SEOTabName }}">
+              <h2>{{ locale|upper|tolabel }}</h2>
+              <div class="row">
+                {{ form_widget(translationField.meta) }}
+              </div>
+            </div>
+            <div role="tabpanel" class="tab-pane {% if loop.first %}active{% endif %}" id="{{ tabName }}">
+              <h2>{{ locale|upper|tolabel }}</h2>
+              {{ form_rest(translationField) }}
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row fork-module-actions">
+    <div class="col-md-12">
+      <div class="btn-toolbar">
+        <div class="btn-group pull-right" role="group">
+          <button id="addButton" type="submit" name="add" class="btn btn-primary">
+            <span class="fa fa-plus-square"></span>&nbsp;
+            {{ 'lbl.AddGroup'|trans|ucfirst }}
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  {{ form_end(form) }}
+{% endblock %}

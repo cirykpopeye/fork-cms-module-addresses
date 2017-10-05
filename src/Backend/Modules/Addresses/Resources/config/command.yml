@@ -1,0 +1,34 @@
+services:
+  addresses.handler.create_group:
+    class: Backend\Modules\Addresses\Domain\Group\Command\CreateGroupHandler
+    arguments:
+      - "@addresses.repository.group"
+    tags:
+      - { name: command_handler, handles: Backend\Modules\Addresses\Domain\Group\Command\CreateGroup }
+  addresses.handler.update_group:
+      class: Backend\Modules\Addresses\Domain\Group\Command\UpdateGroupHandler
+      tags:
+        - { name: command_handler, handles: Backend\Modules\Addresses\Domain\Group\Command\UpdateGroup }
+  addresses.handler.create_address:
+      class: Backend\Modules\Addresses\Domain\Address\Command\CreateAddressHandler
+      arguments:
+        - "@addresses.repository.address"
+      tags:
+        - { name: command_handler, handles: Backend\Modules\Addresses\Domain\Address\Command\CreateAddress }
+  addresses.handler.update_address:
+      class: Backend\Modules\Addresses\Domain\Address\Command\UpdateAddressHandler
+      tags:
+        - { name: command_handler, handles: Backend\Modules\Addresses\Domain\Address\Command\UpdateAddress }
+
+  addresses.handler.sort_addresses:
+        class: Backend\Modules\Addresses\Domain\Address\Command\SortAddressesHandler
+        arguments:
+          - "@addresses.repository.address"
+        tags:
+          - { name: command_handler, handles: Backend\Modules\Addresses\Domain\Address\Command\SortAddresses }
+  addresses.handler.sort_groups:
+        class: Backend\Modules\Addresses\Domain\Group\Command\SortGroupsHandler
+        arguments:
+          - "@addresses.repository.group"
+        tags:
+          - { name: command_handler, handles: Backend\Modules\Addresses\Domain\Group\Command\SortGroups }

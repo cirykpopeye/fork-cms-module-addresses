@@ -1,0 +1,229 @@
+{% extends '/Layout/Templates/base.html.twig' %}
+
+{% block content %}
+  {{ form_start(form) }}
+  <div class="row fork-module-content">
+    <div class="col-md-12">
+      <div class="tabpanel">
+        <ul class="nav nav-tabs" role="tablist">
+
+            {# Content tabs #}
+            {% for locale, translationField in form.translations %}
+                {% set tabName = 'tab' ~ locale|ucfirst %}
+              <li role="presentation" {% if loop.first %}class="active"{% endif %}>
+                <a href="#{{ tabName }}"
+                   aria-controls="{{ tabName }}" role="tab" data-toggle="tab">
+                    {{ locale|upper|tolabel|ucfirst }}</a>
+              </li>
+            {% endfor %}
+
+          <li role="presentation">
+            <a href="#tabGeneral" aria-controls="tabGeneral" role="tab" data-toggle="tab">{{ 'lbl.General'|trans|ucfirst }}</a>
+          </li>
+
+          <li role="presentation">
+            <a href="#tabGroups" aria-controls="tabGroups" role="tab" data-toggle="tab">{{ 'lbl.Groups'|trans|ucfirst }}</a>
+          </li>
+
+           {# Media #}
+          <li role="presentation">
+            <a href="#tabMedia"
+               aria-controls="media" role="tab" data-toggle="tab">{{ 'lbl.Media'|trans|ucfirst }}</a>
+          </li>
+
+          {# SEO tabs #}
+          {% for locale,translationField in form.translations|reverse %}
+            {% set tabName = 'tabSEO' ~ locale|ucfirst %}
+            <li class="pull-right" role="presentation">
+              <a href="#{{ tabName }}" aria-controls="{{ tabName }}" role="tab" data-toggle="tab">{{ 'lbl.SEO'|trans|ucfirst }} {{ locale|upper|tolabel }}</a>
+            </li>
+          {% endfor %}
+        </ul>
+        <div class="tab-content">
+          <div role="tabpanel" class="tab-pane" id="tabGeneral">
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                  {{ 'lbl.GeoInformation'|trans }}
+              </div>
+              <div class="panel-body">
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="row">
+                      <div class="col-md-8">
+                          {{ form_row(form.city) }}
+                      </div>
+                      <div class="col-md-4">
+                          {{ form_row(form.postal) }}
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-5">
+                          {{ form_row(form.street) }}
+                      </div>
+                      <div class="col-md-3">
+                          {{ form_row(form.number) }}
+                      </div>
+                      <div class="col-md-4">
+                          {{ form_row(form.country) }}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                  {{ 'lbl.Contact'|trans|ucfirst }}
+              </div>
+              <div class="panel-body">
+                <div class="row">
+                  <div class="col-md-6">
+                      {{ form_row(form.firstName) }}
+                  </div>
+                  <div class="col-md-6">
+                      {{ form_row(form.lastName) }}
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-6">
+                      {{ form_row(form.email) }}
+                  </div>
+                  <div class="col-md-6">
+                      {{ form_row(form.telephone) }}
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-6">
+                      {{ form_row(form.fax) }}
+                  </div>
+                  <div class="col-md-6">
+                      {{ form_row(form.website) }}
+                  </div>
+                </div>
+                  {{ form_row(form.btw) }}
+                  {{ form_row(form.note) }}
+              </div>
+            </div>
+
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                  {{ 'lbl.Visual'|trans }}
+              </div>
+              <div class="panel-body">
+                  {{ form_row(form.image) }}
+                  {{ form_row(form.logo) }}
+                  {{ form_row(form.background) }}
+                  {{ form_row(form.sliderType) }}
+
+                  {% if form.price %}
+                      {{ form_row(form.price) }}
+                  {% endif %}
+              </div>
+            </div>
+          </div>
+
+          <div role="tabpanel" class="tab-pane" id="tabMedia">
+              {# Only include the BackendMediaGroupsHelper once #}
+              {% include "MediaLibrary/Resources/views/BackendMediaGroupsHelper.html.twig" %}
+
+              {{ form_widget(form.mediaGroup, {'mediaGroup': mediaGroup}) }}
+          </div>
+
+          <div role="tabpanel" class="tab-pane" id="tabGroups">
+            <div class="row fork-module-content">
+              <div class="col-md-6">
+                  {{ form_row(form.groups) }}
+              </div>
+            </div>
+          </div>
+
+          {# SEO tab contents #}
+          {% for locale,translationField in form.translations %}
+              {% set tabName = 'tab' ~ locale|ucfirst %}
+              {% set SEOTabName = 'tabSEO' ~ locale|ucfirst %}
+            <div role="tabpanel" class="tab-pane" id="{{ SEOTabName }}">
+              <h2>{{ locale|upper|tolabel }}</h2>
+              <div class="row">
+                  {{ form_widget(translationField.meta) }}
+              </div>
+            </div>
+            <div role="tabpanel" class="tab-pane {% if loop.first %}active{% endif %}" id="{{ tabName }}">
+              <h2>{{ locale|upper|tolabel }}</h2>
+              <div class="row">
+                <div class="col-md-8">
+                    {{ form_row(translationField.title) }}
+                    {{ form_row(translationField.description) }}
+                    {{ form_row(translationField.summary) }}
+                </div>
+                <div class="col-md-4">
+                    {{ form_row(translationField.company) }}
+                    {{ form_row(translationField.titleShort) }}
+
+                </div>
+              </div>
+
+              <div class="panel panel-default">
+                <div class="panel-heading">
+                  <p>{{ 'lbl.Action'|trans|ucfirst }}</p>
+                </div>
+                <div class="panel-body">
+                    {{ form_row(translationField.actionFrom) }}
+                    {{ form_row(translationField.actionTill) }}
+                    {{ form_row(translationField.actionMessage) }}
+                </div>
+              </div>
+
+                {{ form_rest(translationField) }}
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row fork-module-actions">
+    <div class="col-md-12">
+      <div class="btn-toolbar">
+        <div class="btn-group pull-left" role="group">
+          {% if showAddressesDeleteGroup %}
+            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#confirmDelete">
+              <span class="fa fa-trash-o"></span>
+              {{ 'lbl.Delete'|trans|ucfirst }}
+            </button>
+          {% endif %}
+        </div>
+        <div class="btn-group pull-right" role="group">
+          <button id="editButton" type="submit" name="edit" class="btn btn-primary">
+            <span class="fa fa-floppy-o"></span>&nbsp;
+            {{ 'lbl.Save'|trans|ucfirst }}
+          </button>
+        </div>
+      </div>
+    </div>
+    {% if showAddressesDeleteGroup %}
+      <div class="modal fade" id="confirmDelete" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <span class="modal-title h4">{{ 'lbl.Delete'|trans|ucfirst }}</span>
+            </div>
+            <div class="modal-body">
+              <p>{{ 'msg.ConfirmDelete'|trans|format(name)|raw }}</p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">
+                <span class="fa fa-times"></span>{{ 'lbl.Cancel'|trans|ucfirst }}
+              </button>
+              <a href="{{ geturl('DeleteAddress') }}&id={{ id }}" class="btn btn-danger">
+                <span class="fa fa-trash"></span>{{ 'lbl.Delete'|trans|ucfirst }}
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    {% endif %}
+  </div>
+  {{ form_end(form) }}
+{% endblock %}

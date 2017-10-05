@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module>
+	<name>Addresses</name>
+	<version>1.0.0</version>
+	<requirements>
+		<minimum_version>4.2.0</minimum_version>
+	</requirements>
+	<description>
+		<![CDATA[
+			Addresses module
+		]]>
+	</description>
+	<authors>
+		<author>
+			<name><![CDATA[Ciryk Popeye]]></name>
+			<url><![CDATA[http://comsa.be]]></url>
+		</author>
+		<author>
+			<name><![CDATA[Waldo Comsan]]></name>
+			<url><![CDATA[http://comsa.be]]></url>
+		</author>
+	</authors>
+	<events>
+		<event application="backend (symfony event listener)" name="addresses.event.group_created"><![CDATA[Triggered when a group is added.]]></event>
+		<event application="backend (symfony event listener)" name="addresses.event.group_deleted"><![CDATA[Triggered when a group is deleted.]]></event>
+		<event application="backend (symfony event listener)" name="addresses.event.group_updated"><![CDATA[Triggered when a group is edited.]]></event>
+		<event application="backend (symfony event listener)" name="addresses.event.address_created"><![CDATA[Triggered when a address is added.]]></event>
+		<event application="backend (symfony event listener)" name="addresses.event.address_deleted"><![CDATA[Triggered when a address is deleted.]]></event>
+		<event application="backend (symfony event listener)" name="addresses.event.address_updated"><![CDATA[Triggered when a address is edited.]]></event>
+	</events>
+</module>

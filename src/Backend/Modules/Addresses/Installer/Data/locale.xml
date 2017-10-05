@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<locale>
+  <Backend>
+    <Core>
+      <item type="label" name="Addresses">
+        <translation language="nl"><![CDATA[adressen]]></translation>
+      </item>
+      <item type="label" name="ShowAddresses">
+        <translation language="nl"><![CDATA[toon adressen]]></translation>
+      </item>
+    </Core>
+    <Addresses>
+      <item type="label" name="Company">
+        <translation language="nl"><![CDATA[bedrijf]]></translation>
+      </item>
+      <item type="label" name="FirstName">
+        <translation language="nl"><![CDATA[voornaam]]></translation>
+      </item>
+      <item type="label" name="LastName">
+        <translation language="nl"><![CDATA[achternaam]]></translation>
+      </item>
+      <item type="label" name="Postal">
+        <translation language="nl"><![CDATA[postcode]]></translation>
+      </item>
+      <item type="label" name="Telephone">
+        <translation language="nl"><![CDATA[telefoon]]></translation>
+      </item>
+      <item type="label" name="Fax">
+        <translation language="nl"><![CDATA[fax]]></translation>
+      </item>
+      <item type="label" name="Btw">
+        <translation language="nl"><![CDATA[btw]]></translation>
+      </item>
+      <item type="label" name="Note">
+        <translation language="nl"><![CDATA[notitie]]></translation>
+      </item>
+      <item type="label" name="AddAddress">
+        <translation language="nl"><![CDATA[adres toevoegen]]></translation>
+      </item>
+      <item type="label" name="AddGroup">
+        <translation language="nl"><![CDATA[Groep toevoegen]]></translation>
+      </item>
+      <item type="label" name="TitleShort">
+        <translation language="nl"><![CDATA[Korte titel]]></translation>
+      </item>
+      <item type="label" name="Action">
+        <translation language="nl"><![CDATA[Actie]]></translation>
+      </item>
+      <item type="label" name="ActionFrom">
+        <translation language="nl"><![CDATA[Startdatum actie]]></translation>
+      </item>
+      <item type="label" name="ActionTill">
+        <translation language="nl"><![CDATA[Einddatum actie]]></translation>
+      </item>
+      <item type="label" name="ActionMessage">
+        <translation language="nl"><![CDATA[Bericht voor de actie]]></translation>
+      </item>
+      <item type="label" name="Logo">
+        <translation language="nl"><![CDATA[Logo]]></translation>
+      </item>
+      <item type="label" name="Background">
+        <translation language="nl"><![CDATA[Achtergrond]]></translation>
+      </item>
+      <item type="label" name="SliderType">
+        <translation language="nl"><![CDATA[Slider type, voor TV schermen.]]></translation>
+      </item>
+      <item type="label" name="Media">
+        <translation language="nl"><![CDATA[Media]]></translation>
+      </item>
+      <item type="label" name="GeoInformation">
+        <translation language="nl"><![CDATA[Locatie informatie]]></translation>
+      </item>
+      <item type="label" name="Visual">
+        <translation language="nl"><![CDATA[Visueel]]></translation>
+      </item>
+      <item type="label" name="EditAddress">
+        <translation language="nl"><![CDATA[Bewerk adres]]></translation>
+      </item>
+    </Addresses>
+  </Backend>
+  <Frontend>
+    <Core>
+      <item type="label" name="FindYourAddress">
+        <translation language="nl"><![CDATA[Vind jouw adres]]></translation>
+      </item>
+      <item type="label" name="SearchBox">
+        <translation language="nl"><![CDATA[Zoek hier]]></translation>
+      </item>
+    </Core>
+  </Frontend>
+</locale>
