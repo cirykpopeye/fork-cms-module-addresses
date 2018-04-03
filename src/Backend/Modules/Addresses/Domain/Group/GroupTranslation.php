@@ -14,17 +14,19 @@ use Doctrine\ORM\Mapping as ORM;
 class GroupTranslation
 {
     /**
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     * @ORM\Column(type="integer")
+     */
+    private $id;
+    /**
      * @var Locale
-     *
-     * @ORM\Id()
      * @ORM\Column(type="locale", name="language")
      */
     private $locale;
 
     /**
      * @var Group
-     *
-     * @ORM\Id()
      * @ORM\ManyToOne(targetEntity="Group", inversedBy="translations")
      * @ORM\JoinColumn(name="groupId", referencedColumnName="id")
      */
@@ -120,6 +122,14 @@ class GroupTranslation
      */
     public function getMeta() {
         return $this->meta;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getId()
+    {
+        return $this->id;
     }
 
     /**

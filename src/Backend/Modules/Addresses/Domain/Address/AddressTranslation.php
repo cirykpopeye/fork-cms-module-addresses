@@ -15,16 +15,20 @@ use DateTime;
 class AddressTranslation
 {
     /**
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     * @ORM\Column(type="integer")
+     */
+    private $id;
+
+    /**
      * @var Locale
-     * @ORM\Id()
      * @ORM\Column(type="locale", name="language")
      */
     private $locale;
 
     /**
      * @var Address
-     *
-     * @ORM\Id()
      * @ORM\ManyToOne(targetEntity="Address", inversedBy="translations")
      * @ORM\JoinColumn(name="addressId", referencedColumnName="id")
      */
@@ -274,6 +278,14 @@ class AddressTranslation
      */
     public function getSummary() {
         return $this->summary;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getId()
+    {
+        return $this->id;
     }
 
     /**
