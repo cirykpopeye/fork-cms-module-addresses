@@ -83,6 +83,9 @@
       <item type="label" name="FindYourAddress">
         <translation language="nl"><![CDATA[Vind jouw adres]]></translation>
       </item>
+      <item type="label" name="Phone">
+        <translation language="nl"><![CDATA[Telefoon]]></translation>
+      </item>
       <item type="label" name="SearchBox">
         <translation language="nl"><![CDATA[Zoek hier]]></translation>
       </item>
