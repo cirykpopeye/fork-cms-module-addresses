@@ -3,7 +3,7 @@
 	<name>Addresses</name>
 	<version>1.0.0</version>
 	<requirements>
-		<minimum_version>4.2.0</minimum_version>
+		<minimum_version>5.0.0</minimum_version>
 	</requirements>
 	<description>
 		<![CDATA[
