@@ -27,11 +27,8 @@
                 {{ addressLang.getParagraph()|raw }}
             {% endif %}
         </div>
-        <div class="col-md-3 col-sm-6 text-xs-center">
-          <a href="{{ address.getWebUrl() }}"><img src="{{ address.logo.getWebPath('155x155') }}" style="height: 180px" alt="{{ addressLang.title }}"></a>
-        </div>
         <div class="col-md-3 col-sm-6 text-xs-center text-sm-right">
-          <a href="{{ address.getWebUrl() }}"><img src="{{ address.image.getWebPath('340x227') }}" style="height: 180px" alt="{{ addressLang.title }}"></a>
+          <a href="{{ address.getWebUrl() }}"><img src="{{ address.image.webPath }}" style="height: 180px" alt="{{ addressLang.title }}"></a>
         </div>
       </div>
       <hr>

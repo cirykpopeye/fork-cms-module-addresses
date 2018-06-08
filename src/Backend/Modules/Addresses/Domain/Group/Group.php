@@ -208,6 +208,13 @@ class Group
     }
 
     /**
+     * @ORM\PreRemove()
+     */
+    public function preRemove() {
+        BackendModel::deleteExtraById($this->extraId);
+    }
+
+    /**
      * @ORM\PreUpdate
      */
     public function preUpdate()

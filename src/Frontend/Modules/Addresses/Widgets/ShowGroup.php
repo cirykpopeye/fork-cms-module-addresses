@@ -2,8 +2,8 @@
 
 namespace Frontend\Modules\Addresses\Widgets;
 
-use Backend\Modules\Addresses\Entity\Group;
-use Backend\Modules\Addresses\Repository\GroupRepository;
+use Backend\Modules\Addresses\Domain\Group\Group;
+use Backend\Modules\Addresses\Domain\Group\GroupRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Frontend\Core\Engine\Base\Widget as FrontendBaseWidget;
 use Frontend\Core\Language\Locale;
@@ -49,9 +49,9 @@ class ShowGroup extends FrontendBaseWidget
      * Parse to template
      */
     protected function parse() {
-        $this->tpl->assign('group', $this->group);
+        $this->template->assign('group', $this->group);
         //-- Assign a frontend language, so translations can be retrieved.
-        $this->tpl->assign('language', Locale::frontendLanguage());
+        $this->template->assign('language', Locale::frontendLanguage());
 
     }
 }

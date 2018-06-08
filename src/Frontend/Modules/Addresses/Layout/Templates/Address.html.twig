@@ -3,8 +3,6 @@
     <div class="col-sm-8">
         <h2>{{ addressLang.getTitle() }}</h2>
         <p>{{ addressLang.getDescription()|raw }}</p>
-        {#<h3>{{ 'lbl.Address'|trans }}</h3>#}
-        
 
         <h3>{{ 'lbl.ContactInformation'|trans|ucfirst }}</h3>
         <dl>
@@ -23,16 +21,12 @@
                 <dd>{{ address.fax }}</dd>
             {% endif %}
         </dl>
-
-        {% if addressLang.hasValidAction() %}
-            {{ addressLang.actionMessage|raw }}
-        {% endif %}
     </div>
     <!-- /.col-sm-8 -->
 
     <div class="col-sm-4">
         {% if address.getImage() != '' %}
-            <p><img src="{{ address.getImage().getWebPath('source') }}" alt="{{ addressLang.getTitle() }}" title="{{ addressLang.getTitle() }}"  ></p>
+            <p><img src="{{ address.image.webPath }}" alt="{{ addressLang.getTitle() }}" title="{{ addressLang.getTitle() }}"  ></p>
         {% endif %}
         <h3><a href="http://maps.google.com/?q={{ address.postal }} {{ address.city }}, {{ address.country }}, {{ address.street }} {{ address.number }}" target="_blank">{{ 'lbl.LinkToMaps'|trans|ucfirst }}</a></h3>
 
