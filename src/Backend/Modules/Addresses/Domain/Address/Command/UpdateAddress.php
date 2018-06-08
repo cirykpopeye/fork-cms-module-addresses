@@ -77,7 +77,6 @@ final class UpdateAddress extends AddressDataTransferObject
         $this->btw = $address->getBtw();
         $this->note = $address->getNote();
         $this->number = $address->getNumber();
-        $this->sliderType = $address->getSliderType();
     }
 
     /**

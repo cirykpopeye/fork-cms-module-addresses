@@ -106,27 +106,28 @@
               </div>
             </div>
 
+            {% if form.price %}
             <div class="panel panel-default">
               <div class="panel-heading">
                 {{ 'lbl.Visual'|trans }}
               </div>
               <div class="panel-body">
-                {{ form_row(form.image) }}
-                {{ form_row(form.logo) }}
-                {{ form_row(form.background) }}
-                {{ form_row(form.sliderType) }}
-
                   {% if form.price %}
                       {{ form_row(form.price) }}
                   {% endif %}
               </div>
-            </div>
+            </div>{% endif %}
           </div>
 
           <div role="tabpanel" class="tab-pane" id="tabGroups">
             <div class="row fork-module-content">
               <div class="col-md-6">
-                {{ form_row(form.groups) }}
+                {% if form.groups|length %}
+                    {{ form_row(form.groups) }}
+                {% else %}
+                  <div class="alert alert-warning">{{ 'msg.NoGroupsAvailable'|trans }}</div>
+                    {% do form.groups.setRendered() %}
+                {% endif %}
               </div>
             </div>
           </div>
@@ -153,17 +154,6 @@
                   {{ form_row(translationField.company) }}
                   {{ form_row(translationField.titleShort) }}
 
-                </div>
-              </div>
-
-              <div class="panel panel-default">
-                <div class="panel-heading">
-                  <p>{{ 'lbl.Action'|trans|ucfirst }}</p>
-                </div>
-                <div class="panel-body">
-                    {{ form_row(translationField.actionFrom) }}
-                    {{ form_row(translationField.actionTill) }}
-                    {{ form_row(translationField.actionMessage) }}
                 </div>
               </div>
 

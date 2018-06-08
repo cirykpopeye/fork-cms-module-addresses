@@ -54,6 +54,7 @@ final class UpdateGroup extends GroupDataTransferObject
         }
         $this->group = $group;
         $this->addresses = $group->getAddresses();
+        $this->images = $group->getImages();
     }
 
     /**

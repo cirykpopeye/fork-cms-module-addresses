@@ -6,6 +6,7 @@ use Backend\Core\Language\Language;
 use Backend\Core\Language\Locale as BackendLocale;
 use Backend\Modules\Addresses\Domain\Address\Address;
 use Backend\Modules\Addresses\Domain\Group\Exception\GroupNotFoundException;
+use Backend\Modules\MediaLibrary\Domain\MediaGroup\MediaGroup;
 use Common\Locale;
 use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -47,11 +48,20 @@ class Group
     private $sequence;
 
     /**
-     * @var GroupImage
+     * @var MediaGroup
      *
-     * @ORM\Column(type="addresses_group_image", nullable=true)
+     * @ORM\OneToOne(
+     *      targetEntity="Backend\Modules\MediaLibrary\Domain\MediaGroup\MediaGroup",
+     *      cascade="persist",
+     *      orphanRemoval=true
+     * )
+     * @ORM\JoinColumn(
+     *      name="mediaGroupId",
+     *      referencedColumnName="id",
+     *      onDelete="cascade"
+     * )
      */
-    private $image;
+    protected $images;
 
     /**
      * @var ArrayCollection|GroupTranslation[]
@@ -81,17 +91,18 @@ class Group
     private $editedOn;
 
     /**
-     * @param int $userId
-     * @param GroupImage $image
-     * @param int $sequence
-     * @param int $extraId
+     * Group constructor.
+     * @param $userId
+     * @param $sequence
+     * @param $extraId
+     * @param MediaGroup $images
      */
-    public function __construct($userId, GroupImage $image, $sequence, $extraId) {
+    public function __construct($userId, $sequence, $extraId, MediaGroup $images) {
         $this->translations = new ArrayCollection();
         $this->userId = $userId;
-        $this->image = $image;
         $this->sequence = $sequence;
         $this->extraId = $extraId;
+        $this->images = $images;
     }
 
     /**
@@ -123,11 +134,11 @@ class Group
     }
 
     /**
-     * @return GroupImage
+     * @return \Backend\Modules\MediaLibrary\Domain\MediaItem\MediaItem|null
      */
     public function getImage()
     {
-        return $this->image;
+        return $this->images->getFirstConnectedMediaItem();
     }
 
     /**
@@ -181,32 +192,6 @@ class Group
     }
 
     /**
-     * @ORM\PreUpdate()
-     * @ORM\PrePersist()
-     */
-    public function prepareToUploadImage()
-    {
-        $this->image->prepareToUpload();
-    }
-
-    /**
-     * @ORM\PostRemove()
-     */
-    public function removeImage()
-    {
-        $this->image->remove();
-    }
-
-    /**
-     * @ORM\PostUpdate()
-     * @ORM\PostPersist()
-     */
-    public function uploadImage()
-    {
-        $this->image->upload();
-    }
-
-    /**
      * @return DateTime
      */
     public function getEditedOn()
@@ -220,6 +205,13 @@ class Group
     public function prePersist()
     {
         $this->createdOn = $this->editedOn = new DateTime();
+    }
+
+    /**
+     * @ORM\PreRemove()
+     */
+    public function preRemove() {
+        BackendModel::deleteExtraById($this->extraId);
     }
 
     /**
@@ -239,15 +231,21 @@ class Group
     }
 
     /**
-     * @param $image
      * @throws GroupNotFoundException
      * @throws \Backend\Core\Engine\Exception
      * @throws \Exception
      */
-    public function update($image)
+    public function update()
     {
-        $this->image = $image;
         $this->updateWidget();
+    }
+
+    /**
+     * @return MediaGroup
+     */
+    public function getImages(): MediaGroup
+    {
+        return $this->images;
     }
 
     /**

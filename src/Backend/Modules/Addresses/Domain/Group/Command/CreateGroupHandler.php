@@ -33,10 +33,11 @@ final class CreateGroupHandler
     {
         $createGroup->group = new Group(
             Authentication::getUser()->getUserId(),
-            GroupImage::fromUploadedFile($createGroup->image),
             $this->groupRepository->getNextSequence(),
-            $this->getNewExtraId()
+            $this->getNewExtraId(),
+            $createGroup->images
         );
+
         $group = $createGroup->group;
 
         foreach($createGroup->addresses as $address) {

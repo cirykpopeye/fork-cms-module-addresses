@@ -30,7 +30,6 @@ final class EditAddress extends ActionEdit
             $this->template->assign('form', $form->createView());
             $this->template->assign('id', $address->getId());
             $this->template->assign('name', $address->getTranslation(Locale::workingLocale())->getTitle());
-            $this->template->assign('currentImage', $address->getImage()->getWebPath('source'));
             $this->template->assign('mediaGroup', $form->getData()->mediaGroup);
 
             $this->parse();

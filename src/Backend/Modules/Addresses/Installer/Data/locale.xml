@@ -76,6 +76,12 @@
       <item type="label" name="EditAddress">
         <translation language="nl"><![CDATA[Bewerk adres]]></translation>
       </item>
+      <item type="label" name="EditGroup">
+        <translation language="nl"><![CDATA[Bewerk groep]]></translation>
+      </item>
+      <item type="message" name="NoAddressesAvailable">
+        <translation language="nl"><![CDATA[Er zijn geen adressen beschikbaar]]></translation>
+      </item>
     </Addresses>
   </Backend>
   <Frontend>

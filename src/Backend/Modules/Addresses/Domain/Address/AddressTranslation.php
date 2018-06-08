@@ -76,23 +76,6 @@ class AddressTranslation
     private $meta;
 
     /**
-     * @var DateTime
-     * @ORM\Column(type="datetime", nullable=true)
-     */
-    private $actionFrom;
-
-    /**
-     * @var DateTime
-     * @ORM\Column(type="datetime", nullable=true)
-     */
-    private $actionTill;
-    /**
-     * @var string $actionMessage
-     * @ORM\Column(type="text", nullable=true)
-     */
-    private $actionMessage;
-
-    /**
      * @var string $titleShort
      * @ORM\Column(type="string", nullable=true)
      */
@@ -107,12 +90,9 @@ class AddressTranslation
      * @param boolean $hidden
      * @param Meta $meta
      * @param $company
-     * @param string $actionMessage
-     * @param DateTime $actionFrom
-     * @param DateTime $actionTill
      * @param string $titleShort
      */
-    public function __construct($locale, $address, $title, $description, $summary, $hidden, $meta, $company, ?string $actionMessage, ?DateTime $actionFrom, ?DateTime $actionTill, ?string $titleShort) {
+    public function __construct($locale, $address, $title, $description, $summary, $hidden, $meta, $company, ?string $titleShort) {
         $this->locale = $locale;
         $this->address = $address;
         $this->title = $title;
@@ -121,9 +101,6 @@ class AddressTranslation
         $this->hidden = $hidden;
         $this->meta = $meta;
         $this->company = $company;
-        $this->actionMessage = $actionMessage;
-        $this->actionFrom = $actionFrom;
-        $this->actionTill = $actionTill;
         $this->titleShort = $titleShort;
 
         $this->address->addTranslation($this);
@@ -196,54 +173,6 @@ class AddressTranslation
     }
 
     /**
-     * @return DateTime
-     */
-    public function getActionFrom(): ?DateTime
-    {
-        return $this->actionFrom;
-    }
-
-    /**
-     * @param DateTime $actionFrom
-     */
-    public function setActionFrom(DateTime $actionFrom)
-    {
-        $this->actionFrom = $actionFrom;
-    }
-
-    /**
-     * @return DateTime
-     */
-    public function getActionTill(): ?DateTime
-    {
-        return $this->actionTill;
-    }
-
-    /**
-     * @param DateTime $actionTill
-     */
-    public function setActionTill(DateTime $actionTill)
-    {
-        $this->actionTill = $actionTill;
-    }
-
-    /**
-     * @return string
-     */
-    public function getActionMessage(): string
-    {
-        return (string) $this->actionMessage;
-    }
-
-    /**
-     * @param string $actionMessage
-     */
-    public function setActionMessage(string $actionMessage)
-    {
-        $this->actionMessage = (string) $actionMessage;
-    }
-
-    /**
      * @return string
      */
     public function getTitleShort(): string
@@ -295,39 +224,21 @@ class AddressTranslation
         return $this->meta;
     }
 
-    public function hasValidAction() {
-        //-- Compare dates
-        if (
-            !empty ($this->actionMessage) &&
-            $this->actionFrom < new DateTime() &&
-            $this->actionTill > new DateTime()
-        ) {
-            return true;
-        }
-        return false;
-    }
-
     /**
      * @param string $title
      * @param string $description
      * @param string $summary
      * @param boolean $hidden
      * @param string $company
-     * @param string $actionMessage
-     * @param DateTime $actionFrom
-     * @param DateTime $actionTill
      * @param string $titleShort
      */
-    public function update($title, $description, $summary, $hidden, $company, ?string $actionMessage, ?DateTime $actionFrom, ?DateTime $actionTill, ?string $titleShort)
+    public function update($title, $description, $summary, $hidden, $company, ?string $titleShort)
     {
         $this->title = $title;
         $this->description = $description;
         $this->summary = $summary;
         $this->hidden = $hidden;
         $this->company = $company;
-        $this->actionMessage = $actionMessage;
-        $this->actionFrom = $actionFrom;
-        $this->actionTill = $actionTill;
         $this->titleShort = $titleShort;
 
     }
@@ -343,9 +254,6 @@ class AddressTranslation
         $dataTransferObject->title = $this->title;
         $dataTransferObject->summary = $this->summary;
         $dataTransferObject->hidden = $this->hidden;
-        $dataTransferObject->actionMessage = $this->actionMessage;
-        $dataTransferObject->actionFrom = $this->actionFrom;
-        $dataTransferObject->actionTill = $this->actionTill;
         $dataTransferObject->titleShort = $this->titleShort;
 
         return $dataTransferObject;

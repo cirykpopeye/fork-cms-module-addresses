@@ -13,6 +13,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\PersistentCollection;
 use Frontend\Core\Engine\Navigation;
+use Backend\Core\Engine\Model as BackendModel;
 
 /**
  * @ORM\Table(name="addresses")
@@ -40,25 +41,6 @@ class Address
      * @ORm\Column(type="integer")
      */
     private $sequence;
-
-    /**
-     * @var AddressImage
-     *
-     * @ORM\Column(type="addresses_address_image", nullable=true)
-     */
-    private $image;
-
-    /**
-     * @var AddressLogo
-     * @ORM\Column(type="addresses_address_logo", nullable=true)
-     */
-    private $logo;
-
-    /**
-     * @var AddressBackground
-     * @ORM\Column(type="addresses_address_background", nullable=true)
-     */
-    private $background;
 
     /**
      * @var MediaGroup
@@ -167,12 +149,6 @@ class Address
     private $mapsId;
 
     /**
-     * @var string $sliderType
-     * @ORM\Column(type="string", nullable=true)
-     */
-    private $sliderType;
-
-    /**
      * @var ArrayCollection|AddressTranslation[]
      * @ORM\OneToMany(targetEntity="AddressTranslation", mappedBy="address", orphanRemoval=true, cascade={"persist"})
      */
@@ -216,10 +192,9 @@ class Address
      * @param AddressBackground $addressBackground
      * @param $sliderType
      */
-    public function __construct($userId, AddressImage $image, $sequence, $group, $groups, $lastName, $firstName, $email, $street, $number, $postal, $city, $country, $fax, $telephone, $website, $note, $btw, AddressLogo $logo, AddressBackground $addressBackground, $sliderType) {
+    public function __construct($userId, $sequence, $group, $groups, $lastName, $firstName, $email, $street, $number, $postal, $city, $country, $fax, $telephone, $website, $note, $btw) {
         $this->translations = new ArrayCollection();
         $this->userId = $userId;
-        $this->image = $image;
         $this->sequence = $sequence;
         $this->group = $group;
         $this->groups = $groups;
@@ -236,9 +211,6 @@ class Address
         $this->telephone = $telephone;
         $this->website = $website;
         $this->note = $note;
-        $this->logo = $logo;
-        $this->background = $addressBackground;
-        $this->sliderType = $sliderType;
 
         if(empty($this->lng) || empty($this->lat)) {
             $this->setGeoLocations();
@@ -335,14 +307,6 @@ class Address
     }
 
     /**
-     * @return AddressBackground
-     */
-    public function getBackground(): AddressBackground
-    {
-        return $this->background;
-    }
-
-    /**
      * @return string
      */
     public function getNumber()
@@ -431,6 +395,13 @@ class Address
     }
 
     /**
+     * @return \Backend\Modules\MediaLibrary\Domain\MediaItem\MediaItem|null
+     */
+    public function getImage() {
+        return $this->group->getFirstConnectedMediaItem();
+    }
+
+    /**
      * @return string
      * @throws AddressNotFoundException
      */
@@ -438,30 +409,6 @@ class Address
         //-- Fetch address URL
         $addressesUrl = Navigation::getURLForBlock('Addresses');
         return $addressesUrl . '/' . $this->getTranslation(\Frontend\Core\Language\Locale::frontendLanguage())->getMeta()->getUrl();
-    }
-
-    /**
-     * @return AddressImage
-     */
-    public function getImage()
-    {
-        return $this->image;
-    }
-
-    /**
-     * @return AddressLogo
-     */
-    public function getLogo()
-    {
-        return $this->logo;
-    }
-
-    /**
-     * @return string
-     */
-    public function getSliderType(): ?string
-    {
-        return $this->sliderType;
     }
 
     /**
@@ -517,14 +464,20 @@ class Address
 
     public function updateSearchIndex() {
         foreach($this->translations as $translation) {
+
+            $data = array(
+                'title' => $translation->getTitle(),
+                'description', $translation->getDescription()
+            );
+
+            if ($this->getGroups()->count()) {
+                $data['group'] = $this->getGroups()->first()->getTranslation($translation->getLocale())->getTitle();
+            }
+
             Model::saveIndex(
                 'Addresses',
                 $this->getId(),
-                array(
-                    'title' => $translation->getTitle(),
-                    'group' => $this->getGroups()->first()->getTranslation($translation->getLocale())->getTitle(),
-                    'description', $translation->getDescription()
-                ),
+                $data,
                 $translation->getLocale()
             );
         }
@@ -580,35 +533,6 @@ class Address
     }
 
     /**
-     * @ORM\PostUpdate()
-     * @ORM\PostPersist()
-     */
-    public function uploadImages() {
-        $this->image->upload();
-        $this->logo->upload();
-        $this->background->upload();
-    }
-
-    /**
-     * @ORM\PreUpdate()
-     * @ORM\PrePersist()
-     */
-    public function prepareToUploadImages() {
-        $this->image->prepareToUpload();
-        $this->logo->prepareToUpload();
-        $this->background->prepareToUpload();
-    }
-
-    /**
-     * @ORM\PostRemove()
-     */
-    public function removeImages() {
-        $this->logo->remove();
-        $this->image->remove();
-        $this->background->remove();
-    }
-
-    /**
      * @return DateTime
      */
     public function getEditedOn()
@@ -633,7 +557,6 @@ class Address
     }
 
     /**
-     * @param $image
      * @param PersistentCollection $groups
      * @param MediaGroup $group
      * @param $lastName
@@ -649,15 +572,9 @@ class Address
      * @param $website
      * @param $btw
      * @param $note
-     * @param $logo
-     * @param $background
-     * @param $sliderType
      */
-    public function update($image, PersistentCollection $groups, MediaGroup $group, $lastName, $firstName, $city, $postal, $street, $number, $country, $telephone, $email, $fax, $website, $btw, $note, $logo, $background, $sliderType)
+    public function update(PersistentCollection $groups, MediaGroup $group, $lastName, $firstName, $city, $postal, $street, $number, $country, $telephone, $email, $fax, $website, $btw, $note)
     {
-        $this->image = $image;
-        $this->logo = $logo;
-        $this->background = $background;
         $this->groups = $groups;
         $this->group = $group;
 
@@ -674,7 +591,6 @@ class Address
         $this->website = $website;
         $this->btw = $btw;
         $this->note = $note;
-        $this->sliderType = $sliderType;
 
 
         $this->setGeoLocations();
@@ -689,9 +605,8 @@ class Address
                 $this->getLat(),
                 $this->getLng(),
                 urlencode($this->getTranslation(\Backend\Core\Language\Locale::workingLocale())->getTitle()),
-                'AIzaSyDbpf1N5BkUXv1-Z-tq7vaal6_hNMiksug'
+                BackendModel::get('fork.settings')->get('Core', 'google_maps_key')
             );
-
 
             $data = json_decode(file_get_contents($url), true);
 
