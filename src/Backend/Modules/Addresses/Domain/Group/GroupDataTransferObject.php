@@ -2,6 +2,7 @@
 
 namespace Backend\Modules\Addresses\Domain\Group;
 
+use Backend\Modules\MediaLibrary\Domain\MediaGroup\MediaGroup;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -14,17 +15,6 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class GroupDataTransferObject
 {
-    /**
-     * @var UploadedFile
-     *
-     * @Assert\File(
-     *     maxSize = "6M",
-     *     mimeTypes = {"image/jpeg", "image/gif", "image/png"},
-     *     mimeTypesMessage = "err.JPGGIFAndPNGOnly"
-     * )
-     */
-    public $image;
-
     /**
      * @var int
      */
@@ -44,4 +34,9 @@ class GroupDataTransferObject
      * @var ArrayCollection<Address>
      */
     public $addresses;
+
+    /**
+     * @var MediaGroup
+     */
+    public $images;
 }

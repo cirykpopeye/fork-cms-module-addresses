@@ -17,14 +17,16 @@
             </li>
           {% endfor %}
 
-          <li role="presentation">
-            <a href="#tabGeneral" aria-controls="tabGeneral" role="tab" data-toggle="tab">{{ 'lbl.General'|trans|ucfirst }}</a>
-          </li>
-
           {# Addresses #}
           <li role="presentation">
             <a href="#tabAddresses"
                aria-controls="media" role="tab" data-toggle="tab">{{ 'lbl.Addresses'|trans|ucfirst }}</a>
+          </li>
+
+            {# Media #}
+          <li role="presentation">
+            <a href="#tabMedia"
+               aria-controls="media" role="tab" data-toggle="tab">{{ 'lbl.Media'|trans|ucfirst }}</a>
           </li>
 
           {# SEO tabs #}
@@ -36,18 +38,22 @@
           {% endfor %}
         </ul>
         <div class="tab-content">
-          <div role="tabpanel" class="tab-pane" id="tabGeneral">
-            <div class="row fork-module-content">
-              <div class="col-md-6">
-                {{ form_row(form.image) }}
-              </div>
-            </div>
+          <div role="tabpanel" class="tab-pane" id="tabMedia">
+              {# Only include the BackendMediaGroupsHelper once #}
+              {% include "MediaLibrary/Resources/views/BackendMediaGroupsHelper.html.twig" %}
+
+              {{ form_widget(form.images, {'mediaGroup': mediaGroup}) }}
           </div>
 
           <div role="tabpanel" class="tab-pane" id="tabAddresses">
             <div class="row fork-module-content">
               <div class="col-md-12">
-                  {{ form_row(form.addresses) }}
+                  {% if form.addresses|length %}
+                      {{ form_row(form.addresses) }}
+                  {% else %}
+                    <div class="alert alert-warning">{{ 'msg.NoAddressesAvailable'|trans }}</div>
+                      {% do form.addresses.setRendered() %}
+                  {% endif %}
               </div>
             </div>
           </div>

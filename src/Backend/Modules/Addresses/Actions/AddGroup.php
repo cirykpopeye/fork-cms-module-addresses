@@ -32,6 +32,7 @@ class AddGroup extends BackendBaseActionAdd
 
         if (!$form->isValid()) {
             $this->template->assign('form', $form->createView());
+            $this->template->assign('mediaGroup', $form->getData()->images);
 
             $this->parse();
             $this->display();

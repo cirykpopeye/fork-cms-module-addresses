@@ -48,22 +48,6 @@ class AddressTranslationType extends AbstractType
             'required' => false
         ));
 
-        $builder->add('actionFrom', DateType::class, array(
-            'label' => 'lbl.ActionFrom',
-            'required' => false
-        ));
-        $builder->add('actionTill', DateType::class, array(
-            'label' => 'lbl.ActionTill',
-            'required' => false
-        ));
-        $builder->add('actionMessage', EditorType::class, array(
-            'label' => 'lbl.ActionMessage',
-            'required' => false
-        ));
-
-
-
-
         $builder->addEventListener(
                 FormEvents::PRE_SET_DATA,
                 function (FormEvent $event) {

@@ -24,18 +24,6 @@ class AddressType extends AbstractType
     {
         //-- Add image field
         $builder
-            ->add('image', FileType::class, array(
-                'label' => 'lbl.Image',
-                'required' => false
-            ))
-            ->add('logo', FileType::class, array(
-                'label' => 'lbl.Logo',
-                'required' => false
-            ))
-            ->add('background', FileType::class, array(
-                'label' => 'lbl.Background',
-                'required' => false
-            ))
             ->add('groups', EntityType::class, array(
                 'class' => Group::class,
                 'label' => 'lbl.Groups',
@@ -58,8 +46,7 @@ class AddressType extends AbstractType
             ->add('fax', TextType::class, array('required' => false, 'label' => 'lbl.Fax'))
             ->add('website', TextType::class, array('required' => false, 'label' => 'lbl.Website'))
             ->add('btw', TextType::class, array('required' => false, 'label' => 'lbl.Btw'))
-            ->add('note', TextType::class, array('required' => false, 'label' => 'lbl.Note'))
-            ->add('sliderType', ChoiceType::class, array('required' => false, 'label' => 'lbl.SliderType', 'choices' => array('Euro & Pond waarvan Euro in groot', 'Euro & Pond waarvan Pond in groot', 'Euro', 'Pond')));
+            ->add('note', TextType::class, array('required' => false, 'label' => 'lbl.Note'));
     }
 
     public function configureOptions(OptionsResolver $resolver)

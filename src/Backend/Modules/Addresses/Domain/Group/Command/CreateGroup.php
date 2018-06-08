@@ -6,6 +6,8 @@ use Backend\Core\Language\Language;
 use Backend\Core\Language\Locale;
 use Backend\Modules\Addresses\Domain\Group\GroupTranslationDataTransferObject;
 use Backend\Modules\Addresses\Domain\Group\GroupDataTransferObject;
+use Backend\Modules\MediaLibrary\Domain\MediaGroup\MediaGroup;
+use Backend\Modules\MediaLibrary\Domain\MediaGroup\Type;
 
 final class CreateGroup extends GroupDataTransferObject
 {
@@ -24,5 +26,7 @@ final class CreateGroup extends GroupDataTransferObject
                 Locale::fromString($workingLanguage)
             );
         }
+
+        $this->images = MediaGroup::create(Type::fromString('image'));
     }
 }

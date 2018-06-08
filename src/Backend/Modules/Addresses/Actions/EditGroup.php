@@ -30,7 +30,8 @@ final class EditGroup extends ActionEdit
             $this->template->assign('form', $form->createView());
             $this->template->assign('id', $group->getId());
             $this->template->assign('name', $group->getTranslation(Locale::workingLocale())->getTitle());
-            $this->template->assign('currentImage', $group->getImage()->getWebPath('source'));
+            $this->template->assign('mediaGroup', $form->getData()->images);
+
 
             $this->parse();
             $this->display();

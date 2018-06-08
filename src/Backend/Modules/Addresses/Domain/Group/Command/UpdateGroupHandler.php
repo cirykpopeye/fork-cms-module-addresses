@@ -34,10 +34,6 @@ final class UpdateGroupHandler
     {
         $group = $updateGroup->getGroup();
 
-        $image = $group->getImage();
-        if($updateGroup->image instanceof UploadedFile) {
-            $image = $image->setFile($updateGroup->image);
-        }
         /** @var Address $address */
         foreach($this->addressRepository->findAll() as $address) {
             //-- Check if exists in group already
@@ -61,7 +57,7 @@ final class UpdateGroupHandler
             $this->addressRepository->getOwnEntityManager()->persist($address);
         }
 
-        $group->update($image);
+        $group->update();
 
         array_map(
             function (GroupTranslationDataTransferObject $groupTranslationDataTransferObject) use ($group) {

@@ -19,23 +19,7 @@ final class UpdateAddressHandler
         //-- Fetch item
         $address = $updateAddress->getAddress();
 
-        $image = $address->getImage();
-        if($updateAddress->image instanceof UploadedFile) {
-            $image = $image->setFile($updateAddress->image);
-        }
-
-        $logo = $address->getLogo();
-        if($updateAddress->logo instanceof UploadedFile) {
-            $logo = AddressLogo::fromUploadedFile($updateAddress->logo);
-        }
-
-        $background = $address->getBackground();
-        if($updateAddress->background instanceof UploadedFile) {
-            $background = AddressBackground::fromUploadedFile($updateAddress->background);
-        }
-
         $address->update(
-            $image,
             $updateAddress->groups,
             $updateAddress->mediaGroup,
             $updateAddress->lastName,
@@ -50,10 +34,7 @@ final class UpdateAddressHandler
             $updateAddress->fax,
             $updateAddress->website,
             $updateAddress->btw,
-            $updateAddress->note,
-            $logo,
-            $background,
-            $updateAddress->sliderType
+            $updateAddress->note
         );
 
         array_map(
@@ -67,9 +48,6 @@ final class UpdateAddressHandler
                         $addressTranslationDataTransferObject->summary,
                         $addressTranslationDataTransferObject->hidden,
                         $addressTranslationDataTransferObject->company,
-                        $addressTranslationDataTransferObject->actionMessage,
-                        $addressTranslationDataTransferObject->actionFrom,
-                        $addressTranslationDataTransferObject->actionTill,
                         $addressTranslationDataTransferObject->titleShort
                     );
                 } catch (TranslationNotFoundException $translationNotFound) {
@@ -83,9 +61,6 @@ final class UpdateAddressHandler
                         $addressTranslationDataTransferObject->hidden,
                         $addressTranslationDataTransferObject->meta,
                         $addressTranslationDataTransferObject->company,
-                        $addressTranslationDataTransferObject->actionMessage,
-                        $addressTranslationDataTransferObject->actionFrom,
-                        $addressTranslationDataTransferObject->actionTill,
                         $addressTranslationDataTransferObject->titleShort
                     );
                 }

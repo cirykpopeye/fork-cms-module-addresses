@@ -1,10 +1,4 @@
 doctrine:
-  dbal:
-    types:
-      addresses_group_image: Backend\Modules\Addresses\Domain\Group\GroupImageType
-      addresses_address_image: Backend\Modules\Addresses\Domain\Address\AddressImageType
-      addresses_address_logo: Backend\Modules\Addresses\Domain\Address\AddressLogoType
-      addresses_address_background: Backend\Modules\Addresses\Domain\Address\AddressBackgroundType
   orm:
     mappings:
       addresses_address:

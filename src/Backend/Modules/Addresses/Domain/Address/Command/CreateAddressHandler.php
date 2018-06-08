@@ -32,7 +32,6 @@ final class CreateAddressHandler
         //-- Create new address
         $createAddress->address = new Address(
             Authentication::getUser()->getUserId(),
-            AddressImage::fromUploadedFile($createAddress->image),
             $this->addressRepository->getNextSequence(),
             $createAddress->mediaGroup,
             $createAddress->groups,
@@ -48,14 +47,8 @@ final class CreateAddressHandler
             $createAddress->telephone,
             $createAddress->website,
             $createAddress->note,
-            $createAddress->btw,
-            AddressLogo::fromUploadedFile($createAddress->logo),
-            AddressBackground::fromUploadedFile($createAddress->background),
-            $createAddress->sliderType
+            $createAddress->btw
         );
-
-        $translationDataTransfers = $createAddress->translations;
-
 
         $address = $createAddress->address;
         //-- Add languages
@@ -71,9 +64,6 @@ final class CreateAddressHandler
                     $addressTranslationDataTransferObject->hidden,
                     $addressTranslationDataTransferObject->meta,
                     $addressTranslationDataTransferObject->company,
-                    $addressTranslationDataTransferObject->actionMessage,
-                    $addressTranslationDataTransferObject->actionFrom,
-                    $addressTranslationDataTransferObject->actionTill,
                     $addressTranslationDataTransferObject->titleShort
                 );
             },

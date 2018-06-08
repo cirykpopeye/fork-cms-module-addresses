@@ -3,6 +3,7 @@
 namespace Backend\Modules\Addresses\Domain\Group;
 
 use Backend\Modules\Addresses\Domain\Address\Address;
+use Backend\Modules\MediaLibrary\Domain\MediaGroup\MediaGroupType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
@@ -20,13 +21,10 @@ class GroupType extends AbstractType
     {
         //-- Add image field
         $builder
-            ->add('image', FileType::class, array(
-                'label' => 'lbl.Image',
-                'required' => false
-            ))
             ->add('translations', CollectionType::class, array(
                 'entry_type' => GroupTranslationType::class,
             ))
+            ->add('images', MediaGroupType::class, ['label' => 'lbl.Images', 'required' => false])
             ->add('addresses', EntityType::class, array(
                 'class' => Address::class,
                 'label' => 'lbl.Addresses',
