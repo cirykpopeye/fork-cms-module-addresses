@@ -41,7 +41,9 @@ class AddressType extends AbstractType
             ->add('number', TextType::class, array('label' => 'lbl.Number'))
             ->add('postal', TextType::class, array('label' => 'lbl.Postal'))
             ->add('city', TextType::class, array('label' => 'lbl.City'))
-            ->add('country', CountryType::class, array('label' => 'lbl.Country'))
+            ->add('country', CountryType::class, array('label' => 'lbl.Country', 'preferred_choices' => [
+                'BE'
+            ]))
             ->add('telephone', TextType::class, array('required' => false, 'label' => 'lbl.Telephone'))
             ->add('fax', TextType::class, array('required' => false, 'label' => 'lbl.Fax'))
             ->add('website', TextType::class, array('required' => false, 'label' => 'lbl.Website'))

@@ -53,7 +53,7 @@ class AddGroup extends BackendBaseActionAdd
         );
         //-- Return to index
         $this->redirect(
-            Model::createURLForAction('Groups') . '?report=added&var=' . $createGroup->group->getId()
+            Model::createURLForAction('Groups') . '&report=added&var=' . $createGroup->group->getId()
         );
     }
 }

@@ -20,10 +20,12 @@ class AddressesDataGrid extends DataGridDatabase
     public function __construct(Locale $locale)
     {
         parent::__construct(
-            'SELECT i.id, l.title, l.hidden, CONCAT(i.street, " ", i.number, ", ", i.city, " ", i.postal) as address, i.sequence
+            'SELECT i.id, l.title, l.hidden, CONCAT(i.street, " ", i.number, ", ", i.city, " ", i.postal) as address, GROUP_CONCAT(gl.title) as `groups`, i.sequence
                 FROM addresses as i 
                 INNER JOIN addresses_lang as l ON l.addressId = i.id
-                WHERE l.language = :language GROUP BY i.id', array('language' => $locale)
+                INNER JOIN addresses_addresses_groups as ag ON i.id = ag.address_id
+                INNER JOIN addresses_groups_lang as gl ON gl.groupId = ag.group_id
+                WHERE l.language = :language AND gl.language = :language GROUP BY i.id', array('language' => $locale)
         );
 
         $this->enableSequenceByDragAndDrop();

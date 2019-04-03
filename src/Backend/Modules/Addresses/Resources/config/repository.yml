@@ -19,3 +19,8 @@ services:
         factory: ["@doctrine.orm.entity_manager", getRepository]
         arguments:
             - Backend\Modules\Addresses\Domain\Address\AddressTranslation
+    Backend\Modules\Addresses\Domain\Address\AddressSubscriber:
+      arguments:
+        - '@ForkCMS\Utility\Geolocation'
+      tags:
+        - 'doctrine.event_subscriber'

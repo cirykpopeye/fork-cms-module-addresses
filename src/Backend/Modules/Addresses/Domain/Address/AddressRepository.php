@@ -149,8 +149,7 @@ class AddressRepository extends EntityRepository
                 'street' => $address->getStreet(),
                 'number' => $address->getNumber(),
                 'city' => $address->getCity(),
-                'postal' => $address->getPostal(),
-                'placeId' => $address->getMapsId()
+                'postal' => $address->getPostal()
             ];
             $formattedAddresses[] = $formattedAddress;
         }

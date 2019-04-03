@@ -45,7 +45,7 @@ final class EditGroup extends ActionEdit
         $this->get('command_bus')->handle($updateGroup);
 
         $this->redirect(
-            Model::createURLForAction('EditGroup', null, null, array('report' => 'updated', 'var' => $updateGroup->getGroup()->getId(), 'id' => $updateGroup->getGroup()->getId()))
+            Model::createURLForAction('EditGroup', null, null, array('report' => 'updated-group', 'var' => $updateGroup->getGroup()->getId(), 'id' => $updateGroup->getGroup()->getId()))
         );
     }
 

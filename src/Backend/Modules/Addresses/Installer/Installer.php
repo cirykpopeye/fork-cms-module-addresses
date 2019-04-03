@@ -79,5 +79,8 @@ class Installer extends ModuleInstaller
         //-- Add extra
         Model::insertExtra(ModuleExtraType::widget(), 'Addresses', 'ShowAddresses');
         Model::insertExtra(ModuleExtraType::block(), 'Addresses');
+
+        //-- Add settings
+        $this->setSetting($this->getModule(), 'requires_google_maps', true);
     }
 }

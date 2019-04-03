@@ -143,12 +143,6 @@ class Address
     private $lat;
 
     /**
-     * @var string $mapsId
-     * @ORM\Column(type="string", nullable=true)
-     */
-    private $mapsId;
-
-    /**
      * @var ArrayCollection|AddressTranslation[]
      * @ORM\OneToMany(targetEntity="AddressTranslation", mappedBy="address", orphanRemoval=true, cascade={"persist"})
      */
@@ -171,7 +165,6 @@ class Address
     /**
      * Address constructor.
      * @param $userId
-     * @param AddressImage $image
      * @param $sequence
      * @param $group
      * @param $groups
@@ -188,9 +181,6 @@ class Address
      * @param $website
      * @param $note
      * @param $btw
-     * @param AddressLogo $logo
-     * @param AddressBackground $addressBackground
-     * @param $sliderType
      */
     public function __construct($userId, $sequence, $group, $groups, $lastName, $firstName, $email, $street, $number, $postal, $city, $country, $fax, $telephone, $website, $note, $btw) {
         $this->translations = new ArrayCollection();
@@ -211,10 +201,6 @@ class Address
         $this->telephone = $telephone;
         $this->website = $website;
         $this->note = $note;
-
-        if(empty($this->lng) || empty($this->lat)) {
-            $this->setGeoLocations();
-        }
     }
 
     /**
@@ -235,22 +221,6 @@ class Address
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * @return string
-     */
-    public function getMapsId(): ?string
-    {
-        return $this->mapsId;
-    }
-
-    /**
-     * @param string $mapsId
-     */
-    public function setMapsId(string $mapsId)
-    {
-        $this->mapsId = $mapsId;
     }
 
     /**
@@ -435,31 +405,20 @@ class Address
         return $this->groups;
     }
 
-    public function setGeoLocations() {
-        if (!isset($this->lat) || !isset($this->lng)) {
-            $parameters = array(
-                $this->street,
-                $this->number,
-                $this->postal,
-                $this->city,
-                $this->country
-            );
+    /**
+     * @param float $lng
+     */
+    public function setLng(float $lng): void
+    {
+        $this->lng = $lng;
+    }
 
-            $geoUrl = 'http://maps.googleapis.com/maps/api/geocode/json?address=' . rawurlencode(implode(',', $parameters));
-
-            //-- Fetch the content
-            $geoCodes = json_decode(file_get_contents($geoUrl), true);
-
-            // return coordinates latitude/longitude
-            $this->lat = array_key_exists(0, $geoCodes['results']) ? $geoCodes['results'][0]['geometry']['location']['lat'] : null;
-            $this->lng = array_key_exists(0, $geoCodes['results']) ? $geoCodes['results'][0]['geometry']['location']['lng'] : null;
-
-        }
-
-        if ($this->translations->count()) {
-            $this->updateMapsId();
-        }
-
+    /**
+     * @param float $lat
+     */
+    public function setLat(float $lat): void
+    {
+        $this->lat = $lat;
     }
 
     public function updateSearchIndex() {
@@ -592,36 +551,9 @@ class Address
         $this->btw = $btw;
         $this->note = $note;
 
-
-        $this->setGeoLocations();
         $this->updateSearchIndex();
     }
 
-    public function updateMapsId() {
-        if (empty ($this->mapsId)) {
-            //-- Fetch data
-            $url = sprintf(
-                'https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=%s,%s&radius=500&keyword=%s&key=%s',
-                $this->getLat(),
-                $this->getLng(),
-                urlencode($this->getTranslation(\Backend\Core\Language\Locale::workingLocale())->getTitle()),
-                BackendModel::get('fork.settings')->get('Core', 'google_maps_key')
-            );
-
-            $data = json_decode(file_get_contents($url), true);
-
-            if (isset ($data['results']) && !empty ($data['results'])) {
-                $this->setMapsId($data['results'][0]['place_id']);
-            }
-        }
-
-    }
-
-    /**
-     * Only use this in the backend
-     *
-     * @return string
-     */
     public function __toString()
     {
         $locale = BackendLocale::workingLocale();

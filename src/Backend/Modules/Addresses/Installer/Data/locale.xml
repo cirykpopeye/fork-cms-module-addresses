@@ -82,6 +82,12 @@
       <item type="message" name="NoAddressesAvailable">
         <translation language="nl"><![CDATA[Er zijn geen adressen beschikbaar]]></translation>
       </item>
+      <item type="message" name="Updated">
+        <translation language="nl"><![CDATA[Adres is bijgewerkt]]></translation>
+      </item>
+      <item type="message" name="UpdatedGroup">
+        <translation language="nl"><![CDATA[Groep is bijgewerkt]]></translation>
+      </item>
     </Addresses>
   </Backend>
   <Frontend>

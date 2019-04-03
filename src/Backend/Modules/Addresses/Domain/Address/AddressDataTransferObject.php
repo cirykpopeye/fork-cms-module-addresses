@@ -35,6 +35,7 @@ class AddressDataTransferObject
 
     /**
      * @var Group|ArrayCollection
+     * @Assert\Count(min="1")
      */
     public $groups;
 
